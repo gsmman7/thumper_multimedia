@@ -82,7 +82,6 @@ file.close();
 
 
 
-
 int main(void) {
     int file;
     char filename[40];
@@ -152,7 +151,7 @@ int main(void) {
         switch (keys) {
           case UP:
           printf("UP ");
-          send_command("double_effect");
+          send_command("forward");
           break;
 
           case LEFT:
@@ -171,6 +170,10 @@ int main(void) {
           case A:
           printf("A ");
           send_command("strobe");
+            usleep(500000);
+          send_command("special_effect");
+            usleep(500000);
+          send_command("special_effect_2");
           break;
 
           case B:
@@ -179,7 +182,7 @@ int main(void) {
           break;
           case X:
           printf("X ");
-          send_command("special_effect");
+          send_command("buzzer");
           break;
         }
       fflush(stdout);

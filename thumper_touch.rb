@@ -20,6 +20,21 @@ class ThumperRestInterface
 		send_request uri, req
 	end
 
+	def strobe_blue
+		uri = URI(@host + '/neopixels/effects/strobe/0')
+		req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+		req.body = {red: 0, green: 0, blue: 240, delay: 50, id: @@ID }.to_json
+		send_request uri, req
+	end
+
+	def special_effect_2
+		uri = URI(@host + '/neopixels/effects/shift/0')
+		req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+		req.body = {red: 125, green: 10, blue: 165, delay: 50, groupsize: 4, id: @@ID }.to_json
+		send_request uri, req
+	end
+
+
 	def dim
 		uri = URI(@host + '/neopixels/strings/0')
 		req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
@@ -27,7 +42,7 @@ class ThumperRestInterface
 		send_request uri, req
 	end
 
-	def double_effect
+	def triple_effect
 		forward
 		buzzer
 		special_effect
@@ -35,19 +50,22 @@ class ThumperRestInterface
 
 	def left
 		drive @@DRIVE_SPEED, -@@DRIVE_SPEED
-
+		strobe
 	end
 
 	def right
 		drive -@@DRIVE_SPEED, @@DRIVE_SPEED
+		special_effect
 	end
 
 	def forward
 		drive @@DRIVE_SPEED, @@DRIVE_SPEED
+		special_effect_2
 	end
 
 	def reverse
 		drive -@@DRIVE_SPEED, -@@DRIVE_SPEED
+		strobe_blue
 	end
 
 	def stop
